@@ -363,6 +363,45 @@ class Math(callbacks.Plugin):
         irc.reply(convertcore.units(type))
     units = wrap(units, [additional('text')])
 
+    @internationalizeDocstring
+    def sq(self, irc, msg, args, num):
+        """<number to square>
+
+        Squares the given number. (x\x22C5x)
+        """
+        try:
+            irc.reply("%s" % num**2)
+        except ValueError as e:
+            irc.error("%s" % e)
+    sq = wrap(sq, ['int'])
+
+    @internationalizeDocstring
+    def cube(self, irc, msg, args, num):
+        """<number to cube>
+
+        Cubes the given number. (x\x22C5x\x22C5x)
+        """
+        try:
+            irc.reply("%s" % num**3)
+        except ValueError as e:
+            irc.error("%s" % e)
+    cube = wrap(cube, ['int'])
+
+    @internationalizeDocstring
+    def sqrt(self, irc, msg, args, num):
+        """<number to 'square root'>
+
+        Returns the 'square root' of the given number
+        """
+        try:
+            irc.reply("\x221A%i = %i" % (num, math.sqrt(num)))
+        except ValueError:
+            if num == -1:
+                irc.error(_("The square root of '-1' is undefined"))
+            else:
+                irc.error(_("%s" % e))
+    sqrt = wrap(sqrt, ['int'])
+
 Class = Math
 
 # vim:set shiftwidth=4 softtabstop=4 expandtab textwidth=79:
